@@ -1,0 +1,396 @@
+
+@model VistoPorMim.Models.Usuario
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Meu Perfil";
+
+    var inicial = !string.IsNullOrWhiteSpace(Model.Nome)
+        ? Model.Nome.Trim().Substring(0, 1).ToUpper()
+        : "U";
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Meu Perfil - Visto por Mim</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff, #fdf2f8);
+            color: #26324b;
+            min-height: 100vh;
+            padding: 35px 18px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .topo {
+            margin-bottom: 25px;
+        }
+
+        .marca {
+            font-size: 23px;
+            font-weight: bold;
+            color: #5145cd;
+        }
+
+        .marca span {
+            color: #26324b;
+        }
+
+        .cartao {
+            background: #fff;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(43, 53, 100, 0.10);
+        }
+
+        .capa {
+            height: 155px;
+            background: linear-gradient(120deg, #5145cd, #8878f5);
+        }
+
+        .conteudo {
+            padding: 0 35px 35px;
+        }
+
+        .cabecalho-perfil {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            margin-top: -55px;
+            margin-bottom: 35px;
+            position: relative;
+            flex-wrap: wrap;
+        }
+
+        .avatar {
+            width: 112px;
+            height: 112px;
+            border: 5px solid #fff;
+            border-radius: 50%;
+            background: #e8e5ff;
+            color: #5145cd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: bold;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .identificacao {
+            padding-top: 50px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .identificacao h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .email-perfil {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #778198;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            min-width: 0;
+        }
+
+        .icone-email {
+            color: #5145cd;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .email-texto {
+            overflow-wrap: anywhere;
+            word-break: break-word;
+        }
+
+        .etiqueta {
+            display: inline-block;
+            padding: 7px 13px;
+            background: #e9e7ff;
+            color: #5145cd;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .mensagem {
+            padding: 13px 16px;
+            margin-bottom: 22px;
+            background: #e8f8ed;
+            color: #237343;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .titulo-secao {
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        .informacoes {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .campo {
+            background: #f7f8fc;
+            border: 1px solid #edf0f7;
+            border-radius: 13px;
+            padding: 18px;
+            min-width: 0;
+        }
+
+        .campo.completo {
+            grid-column: 1 / -1;
+        }
+
+        .rotulo {
+            display: block;
+            color: #778198;
+            font-size: 13px;
+            margin-bottom: 9px;
+        }
+
+        .valor {
+            color: #26324b;
+            font-size: 15px;
+            font-weight: 600;
+            overflow-wrap: anywhere;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+
+        .acoes {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 28px;
+            flex-wrap: wrap;
+        }
+
+        .botao {
+            display: inline-block;
+            text-decoration: none;
+            background: #5145cd;
+            color: #fff;
+            padding: 13px 22px;
+            border-radius: 11px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .botao:hover {
+            background: #4035b0;
+        }
+
+        .botao-secundario {
+            background: #edeaff;
+            color: #5145cd;
+        }
+
+        .botao-secundario:hover {
+            background: #ddd8ff;
+        }
+
+        .rodape {
+            text-align: center;
+            color: #8a92a5;
+            font-size: 12px;
+            margin-top: 22px;
+        }
+
+        @@media (max-width: 600px) {
+            body {
+                padding: 22px 12px;
+            }
+
+            .conteudo {
+                padding: 0 20px 25px;
+            }
+
+            .capa {
+                height: 120px;
+            }
+
+            .cabecalho-perfil {
+                align-items: flex-start;
+                gap: 12px;
+                margin-top: -45px;
+            }
+
+            .avatar {
+                width: 85px;
+                height: 85px;
+                font-size: 32px;
+            }
+
+            .identificacao {
+                padding-top: 48px;
+                flex-basis: 100%;
+            }
+
+            .identificacao h1 {
+                font-size: 24px;
+            }
+
+            .informacoes {
+                grid-template-columns: 1fr;
+            }
+
+            .campo.completo {
+                grid-column: auto;
+            }
+
+            .acoes {
+                flex-direction: column;
+            }
+
+            .botao {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="container">
+
+        <header class="topo">
+            <div class="marca">Visto <span>por Mim</span></div>
+        </header>
+
+        <section class="cartao">
+            <div class="capa"></div>
+
+            <div class="conteudo">
+
+                <div class="cabecalho-perfil">
+
+                    <div class="avatar">
+                        @if (!string.IsNullOrWhiteSpace(Model.FotoPerfil))
+                        {
+                            <img src="@Model.FotoPerfil"
+                                 alt="Foto de perfil" />
+                        }
+                        else
+                        {
+                            @inicial
+                        }
+                    </div>
+
+                    <div class="identificacao">
+                        <h1>@Model.Nome</h1>
+
+                        <div class="email-perfil">
+                            <span class="icone-email" aria-hidden="true">&#9993;</span>
+                            <span class="email-texto">@Model.Email</span>
+                        </div>
+
+                        <span class="etiqueta">@Model.TipoUsuario</span>
+                    </div>
+
+                </div>
+
+                @if (TempData["Sucesso"] != null)
+                {
+                    <div class="mensagem">
+                        @TempData["Sucesso"]
+                    </div>
+                }
+
+                <h2 class="titulo-secao">Informações pessoais</h2>
+
+                <div class="informacoes">
+
+                    <div class="campo">
+                        <span class="rotulo">Nome completo</span>
+                        <div class="valor">@Model.Nome</div>
+                    </div>
+
+                    <div class="campo">
+                        <span class="rotulo">E-mail</span>
+                        <div class="valor">@Model.Email</div>
+                    </div>
+
+                    <div class="campo">
+                        <span class="rotulo">Telefone</span>
+                        <div class="valor">
+                            @(string.IsNullOrWhiteSpace(Model.Telefone)
+                                ? "Não informado"
+                                : Model.Telefone)
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <span class="rotulo">Data de cadastro</span>
+                        <div class="valor">
+                            @Model.DataCadastro.ToString("dd/MM/yyyy")
+                        </div>
+                    </div>
+
+                    <div class="campo completo">
+                        <span class="rotulo">Biografia</span>
+                        <div class="valor">
+                            @(string.IsNullOrWhiteSpace(Model.Biografia)
+                                ? "Você ainda não adicionou uma biografia."
+                                : Model.Biografia)
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="acoes">
+                    <a class="botao botao-secundario"
+                       href="/Home/Index">
+                        Voltar para o início
+                    </a>
+
+                    <a class="botao"
+                       href="/Usuarios/EditarPerfil">
+                        Editar perfil
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="rodape">
+            Visto por Mim · Seu espaço, sua identidade.
+        </footer>
+
+    </main>
+</body>
+</html>

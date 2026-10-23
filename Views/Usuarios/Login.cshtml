@@ -1,0 +1,172 @@
+@model VistoPorMim.Models.Usuario
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Login - Visto por Mim";
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Entrar - Visto por Mim</title>
+
+    <style>
+         {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f3f7f4;
+            color: rebeccapurple;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 35px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo h1 {
+            margin-bottom: 8px;
+            color:  mediumpurple;
+            font-size: 28px;
+        }
+
+        .logo p {
+            margin: 0;
+            color: mediumpurple;
+            line-height: 1.5;
+        }
+
+        .campo {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #bdc9c0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        input:focus {
+            outline: 3px solid #b8e0c7;
+            border-color:  mediumpurple;
+        }
+
+        .botao {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: mediumpurple;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .botao:hover {
+            background: mediumpurple;
+        }
+
+        .erro {
+            display: block;
+            margin-bottom: 15px;
+            color: rebeccapurple;
+            line-height: 1.5;
+        }
+
+        .cadastro {
+            margin-top: 22px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        a {
+            color:mediumpurple;
+            font-weight: bold;
+        }
+
+        a:focus {
+            outline: 3px solid #b8e0c7;
+        }
+    </style>
+</head>
+
+<body>
+    <main class="login-container">
+        <header class="logo">
+            <h1>Visto por Mim</h1>
+            <p>Um lugar, diferentes necessidades.</p>
+        </header>
+
+        <h2>Entrar na sua conta</h2>
+
+        <form asp-controller="Usuarios"
+              asp-action="Login"
+              method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="All"
+                 class="erro"
+                 role="alert"></div>
+
+            <div class="campo">
+                <label for="Email">E-mail</label>
+                <input type="email"
+                       id="Email"
+                       name="Email"
+                       autocomplete="email"
+                       required>
+            </div>
+
+            <div class="campo">
+                <label for="Senha">Senha</label>
+                <input type="password"
+                       id="Senha"
+                       name="Senha"
+                       autocomplete="current-password"
+                       required>
+            </div>
+
+            <button type="submit" class="botao">
+                Entrar
+            </button>
+        </form>
+
+        <div class="cadastro">
+            Ainda não tem uma conta?
+            <a asp-controller="Usuarios"
+               asp-action="Cadastro">
+                Cadastre-se
+            </a>
+        </div>
+    </main>
+</body>
+</html>
